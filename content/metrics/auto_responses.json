@@ -1,0 +1,14 @@
+{
+  "_doc": "Reply rules for the lead-monitor. For each NEW comment, the FIRST matching rule fires -> posts `reply` (NEVER put a link here) publicly + DMs `dm` (the link/resource goes HERE). Match by comment-text keyword (match_text), post id (match_media_id), or caption substring (match_caption). No match -> deferred for a human. Add one rule per reel that has a 'comment WORD -> I'll DM it' CTA.",
+  "default": "defer",
+  "dm_default": "🙌 thanks for reaching out! Tell me which reel's resource you want and I'll send it over.",
+  "rules": [
+    {
+      "name": "stack",
+      "match_text": ["stack"],
+      "reply": "🙌 just sent it to your DMs — check 📩",
+      "dm": "Here's the Claude + Figma stack 🙌\n\n1) Connect Claude to Figma: run `claude plugin install figma@claude-plugins-official` — now Claude reads your designs.\n2) Get the free content skills: /plugin marketplace add Ootto-AI/claude-content-skills (github.com/Ootto-AI/claude-content-skills).\n3) Then Claude builds + posts your reels and DMs your leads on autopilot — the whole setup is here: github.com/Ootto-AI/claude-figma-stack\n\nLmk what you build!"
+    }
+  ],
+  "dm_rules": []
+}

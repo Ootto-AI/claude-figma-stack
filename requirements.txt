@@ -1,0 +1,3 @@
+composio==0.13.1
+composio-client==1.39.0
+python-dotenv==1.2.2

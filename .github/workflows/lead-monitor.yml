@@ -1,0 +1,67 @@
+name: lead-monitor
+
+# Watches your recent Instagram posts for new comments and, for each one, posts a public reply
+# (link-free) + DMs the resource — by the rules in content/metrics/auto_responses.json.
+# Runs in the cloud on a schedule, so leads get answered even with your laptop off.
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'   # every 20 min (best-effort; GitHub throttles free schedules)
+  workflow_dispatch:          # allow manual runs from the Actions tab
+
+permissions:
+  contents: write             # to commit the updated state file back
+
+concurrency:
+  group: lead-monitor         # never overlap two runs
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # Skip cleanly (green, not red) if secrets aren't configured yet.
+      - name: Check config
+        id: cfg
+        env:
+          COMPOSIO_API_KEY: ${{ secrets.COMPOSIO_API_KEY }}
+        run: |
+          if [ -z "$COMPOSIO_API_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "No secrets set yet — add them in Settings → Secrets → Actions to enable."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run monitor (auto)
+        if: steps.cfg.outputs.configured == 'true'
+        env:
+          OOTTO_ROOT:             ${{ github.workspace }}
+          COMPOSIO_API_KEY:       ${{ secrets.COMPOSIO_API_KEY }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+          CONNECTED_ACCOUNT_ID:   ${{ secrets.CONNECTED_ACCOUNT_ID }}
+          USER_ID:                ${{ secrets.USER_ID }}
+          IG_HANDLE:              ${{ secrets.IG_HANDLE }}
+        run: python scripts/comment_monitor.py auto
+
+      - name: Commit updated state
+        if: steps.cfg.outputs.configured == 'true'
+        run: |
+          git config user.name  "lead-monitor[bot]"
+          git config user.email "lead-monitor@users.noreply.github.com"
+          git add content/metrics/handled_comments.json
+          if git diff --staged --quiet; then
+            echo "no state change"
+          else
+            git commit -m "monitor: update handled state [skip ci]"
+            git push
+          fi
