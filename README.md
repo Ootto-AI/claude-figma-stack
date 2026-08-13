@@ -133,3 +133,7 @@ python scripts/comment_monitor.py send <comment_id> --reply "…" --dm "…"   #
 ## License
 
 MIT — see [LICENSE](LICENSE). Built by [Ootto](https://instagram.com/jayantcreates.ai). PRs welcome.
+
+---
+
+Built by **[Ootto](https://ootto.ai)** - the 24/7 AI operator for Instagram. It studies what is working in your niche, writes and renders the reels, posts them, and turns the comments into leads. [See it running](https://ootto.ai/content).
