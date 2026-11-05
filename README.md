@@ -2,6 +2,8 @@
 
 > Design in **Figma**, let **Claude** build the reel, post it, and reply to every lead — on autopilot.
 
+[![Connect to Ootto](https://img.shields.io/badge/Connect%20to%20Ootto-E8835C?style=for-the-badge)](https://ootto.ai)
+
 This is the exact stack behind [@jayantcreates.ai](https://instagram.com/jayantcreates.ai): a faceless
 Instagram page where Claude finds what's working, builds the finished reel, posts it 3× a day, and DMs
 every commenter the resource. It's four pieces you can wire up in an afternoon — all free except your own
@@ -136,4 +138,6 @@ MIT — see [LICENSE](LICENSE). Built by [Ootto](https://instagram.com/jayantcre
 
 ---
 
-Built by **[Ootto](https://ootto.ai)** - the 24/7 AI operator for Instagram. It studies what is working in your niche, writes and renders the reels, posts them, and turns the comments into leads. [See it running](https://ootto.ai/content).
+Built by **[Ootto](https://ootto.ai)** - the 24/7 AI operator for Instagram. It studies what is working in your niche, writes and renders the reels, posts them, and turns the comments into leads. [See it running](https://ootto.ai).
+
+**[Connect to Ootto →](https://ootto.ai)**
